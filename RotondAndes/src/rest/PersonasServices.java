@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import tm.RotondAndesTm;
+import vos.ConsuconsumoVos;
 import vos.PersonaVos;
 import vos.Preferencia;
 import vos.ReservaVos;
@@ -254,6 +255,37 @@ public class PersonasServices {
 		}
 		return Response.status(200).entity(id + " " + id2).build();
 	}
-
+   
+	// consulta como persona el consumo en rango de fecha
+	@POST
+	@Path("/{id:\\d+}/consumo/{id2:\\d+}/{id3:\\d+}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response consulconsu(ConsuconsumoVos con,@PathParam("id") Long id,@PathParam("id2") Long id2
+			,@PathParam("id3") Long id3) {
+		RotondAndesTm tm = new RotondAndesTm(getPath());
+		List<ConsuconsumoVos> conf;
+		try {
+			conf =tm.Confechus(id2, con, id3, id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(conf).build();
+	}
+	@POST
+	@Path("/{id:\\d+}/noconsumo/{id2:\\d+}/{id3:\\d+}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response noconsulconsu(ConsuconsumoVos con,@PathParam("id") Long id,@PathParam("id2") Long id2
+			,@PathParam("id3") Long id3) {
+		RotondAndesTm tm = new RotondAndesTm(getPath());
+		List<ConsuconsumoVos> conf;
+		try {
+			conf =tm.NoConfechus(id2, con, id3, id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(conf).build();
+	}
 
 }

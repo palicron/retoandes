@@ -20,6 +20,7 @@ import dao.DaoPreferencia;
 import dao.DaoRestaurante;
 import dao.DaoZona;
 import vos.ConsuVos;
+import vos.ConsuconsumoVos;
 import vos.Ingredientes;
 import vos.Items;
 import vos.MenuVos;
@@ -1430,9 +1431,11 @@ public class RotondAndesTm {
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
+			conn.rollback();
 			throw e;
 		} catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
+			conn.rollback();
 			e.printStackTrace();
 			throw e;
 		} finally {
@@ -1462,9 +1465,11 @@ public class RotondAndesTm {
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
+			conn.rollback();
 			throw e;
 		} catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
+			conn.rollback();
 			e.printStackTrace();
 			throw e;
 		} finally {
@@ -1492,10 +1497,12 @@ public class RotondAndesTm {
 			conn.commit();
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
+			conn.rollback();
 			e.printStackTrace();
 			throw e;
 		} catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
+			conn.rollback();
 			e.printStackTrace();
 			throw e;
 		} finally {
@@ -1523,10 +1530,141 @@ public class RotondAndesTm {
 			conn.commit();
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
+			conn.rollback();
 			e.printStackTrace();
 			throw e;
 		} catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				dao.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	//// conuslta cosumo en fecha por admin///
+	public 	List<ConsuconsumoVos> Confech(Long id,ConsuconsumoVos con,long id2) throws SQLException, Exception {
+		List<ConsuconsumoVos> list = null;
+		DaoPersonas dao = new DaoPersonas();
+		try {
+			this.conn = darConexion();
+			dao.setConn(conn);
+			list = dao.darConfe(con,id,id2);
+			conn.commit();
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				dao.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	//// conuslta cosumo en fecha por usuario///
+	public 	List<ConsuconsumoVos> Confechus(Long id,ConsuconsumoVos con,long id2,Long id3) throws SQLException, Exception {
+		List<ConsuconsumoVos> list = null;
+		DaoPersonas dao = new DaoPersonas();
+		try {
+			this.conn = darConexion();
+			dao.setConn(conn);
+			list = dao.darConfeUS(con,id,id2,id3);
+			conn.commit();
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				dao.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	//// conuslta que no cosumieron en fecha por admin///
+	public 	List<ConsuconsumoVos> NoConfech(Long id,ConsuconsumoVos con,long id2) throws SQLException, Exception {
+		List<ConsuconsumoVos> list = null;
+		DaoPersonas dao = new DaoPersonas();
+		try {
+			this.conn = darConexion();
+			dao.setConn(conn);
+			list = dao.darNoConfe(con,id,id2);
+			conn.commit();
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				dao.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	//// conuslta no cosumo en fecha por usuario///
+	public 	List<ConsuconsumoVos> NoConfechus(Long id,ConsuconsumoVos con,long id2,Long id3) throws SQLException, Exception {
+		List<ConsuconsumoVos> list = null;
+		DaoPersonas dao = new DaoPersonas();
+		try {
+			this.conn = darConexion();
+			dao.setConn(conn);
+			list = dao.darNoConfeUS(con,id,id2,id3);
+			conn.commit();
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			conn.rollback();
 			e.printStackTrace();
 			throw e;
 		} finally {

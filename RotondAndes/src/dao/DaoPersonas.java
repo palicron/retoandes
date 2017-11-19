@@ -5,8 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import vos.ConsuconsumoVos;
 import vos.PersonaVos;
 
 public class DaoPersonas {
@@ -64,7 +67,7 @@ public class DaoPersonas {
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
-		while (rs.next()) {
+		while (rs.next() && personas.size()<2000) {
 
 			Long id = rs.getLong("USUARIO_ID");
 			String rol = rs.getString("ROL");
@@ -183,5 +186,256 @@ public class DaoPersonas {
 		}
 		return personas;
 	}
+	
+	public List<ConsuconsumoVos> darConfe(ConsuconsumoVos con , Long id,long id2) throws Exception {
+		ArrayList<ConsuconsumoVos> consu = new ArrayList<ConsuconsumoVos>();
+		ArrayList<String> order = new ArrayList<String>();
+		Date in = con.getIncio();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(in);
+		int d = cal.get(Calendar.DAY_OF_MONTH);
+		int m = cal.get(Calendar.MONTH)+1;
+		int y = cal.get(Calendar.YEAR);
+		String fi = d+"-"+m+"-"+y;
+		Date fin = con.getFin();
+		Calendar cal1 = Calendar.getInstance();
+		cal1.setTime(fin);
+		int df = cal1.get(Calendar.DAY_OF_MONTH);
+		int mf = cal1.get(Calendar.MONTH)+1;
+		int yf = cal1.get(Calendar.YEAR);
+		String fif = df+"-"+mf+"-"+yf;
+		order.add("ORDER BY FECHA");
+		order.add("ORDER BY ID");
+		order.add("ORDER BY NOMBRE");
+		String sql = "SELECT PERSONA.USUARIO_ID AS ID , ROL,NOMBRE,FECHA ";
+		sql += "FROM(select ORDEN.ID_PERSONA AS ID,ORDEN.FECHA AS FECHA ";
+		sql += "from( ORDEN JOIN ITEMS_ORDEN ";
+		sql += "ON ID = ITEMS_ORDEN.ORDEN_ID)JOIN ITEMS ";
+		sql += "ON ITEMS_ORDEN.ITEMS_ID = ITEMS.ID ";
+				sql += "WHERE ITEMS.ID_RESTAURANTE =" + id + " ";
+ 						sql += "AND FECHA BETWEEN '"+ fi+ "' AND '"+ fif +"') JOIN  PERSONA ";
+ 						sql += "ON PERSONA.USUARIO_ID = ID ";
+ 		if(id2==1)
+ 		{
+ 			sql += order.get(0);
+ 		}
+ 		else if(id2==2)
+ 		{
+ 			sql += order.get(1);
+ 		}
+ 		else if(id2==3)
+ 		{
+ 			sql += order.get(2);
+ 		}
+ 		else
+ 		{
+ 			throw new Exception("opcionde de ordenamiento no valido");
+ 		}
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
 
+		while (rs.next()) {
+
+			Long idu = rs.getLong("ID");
+			String rol = rs.getString("ROL");
+			String nombre = rs.getString("NOMBRE");
+			Date fecha = rs.getDate("FECHA");
+
+			consu.add(new ConsuconsumoVos(idu,rol,nombre,fecha,fecha));
+			
+		}
+		return consu;
+	}
+	public List<ConsuconsumoVos> darConfeUS(ConsuconsumoVos con , Long id,long id2,long id3) throws Exception {
+		ArrayList<ConsuconsumoVos> consu = new ArrayList<ConsuconsumoVos>();
+		ArrayList<String> order = new ArrayList<String>();
+		Date in = con.getIncio();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(in);
+		int d = cal.get(Calendar.DAY_OF_MONTH);
+		int m = cal.get(Calendar.MONTH)+1;
+		int y = cal.get(Calendar.YEAR);
+		String fi = d+"-"+m+"-"+y;
+		Date fin = con.getFin();
+		Calendar cal1 = Calendar.getInstance();
+		cal1.setTime(fin);
+		int df = cal1.get(Calendar.DAY_OF_MONTH);
+		int mf = cal1.get(Calendar.MONTH)+1;
+		int yf = cal1.get(Calendar.YEAR);
+		String fif = df+"-"+mf+"-"+yf;
+		order.add("ORDER BY FECHA");
+		order.add("ORDER BY ID");
+		order.add("ORDER BY NOMBRE");
+		String sql = "SELECT PERSONA.USUARIO_ID AS ID , ROL,NOMBRE,FECHA ";
+		sql += "FROM(select ORDEN.ID_PERSONA AS ID,ORDEN.FECHA AS FECHA ";
+		sql += "from( ORDEN JOIN ITEMS_ORDEN ";
+		sql += "ON ID = ITEMS_ORDEN.ORDEN_ID)JOIN ITEMS ";
+		sql += "ON ITEMS_ORDEN.ITEMS_ID = ITEMS.ID ";
+				sql += "WHERE ITEMS.ID_RESTAURANTE =" + id + " ";
+ 						sql += "AND FECHA BETWEEN '"+ fi+ "' AND '"+ fif +"') JOIN  PERSONA ";
+ 						sql += "ON PERSONA.USUARIO_ID = ID ";
+ 						sql += "WHERE ID = " + id3 +" ";	
+ 		if(id2==1)
+ 		{
+ 			sql += order.get(0);
+ 		}
+ 		else if(id2==2)
+ 		{
+ 			sql += order.get(1);
+ 		}
+ 		else if(id2==3)
+ 		{
+ 			sql += order.get(2);
+ 		}
+ 		else
+ 		{
+ 			throw new Exception("opcionde de ordenamiento no valido");
+ 		}
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		while (rs.next()) {
+
+			Long idu = rs.getLong("ID");
+			String rol = rs.getString("ROL");
+			String nombre = rs.getString("NOMBRE");
+			Date fecha = rs.getDate("FECHA");
+
+			consu.add(new ConsuconsumoVos(idu,rol,nombre,fecha,fecha));
+			
+		}
+		return consu;
+	}
+	
+	public List<ConsuconsumoVos> darNoConfe(ConsuconsumoVos con , Long id,long id2) throws Exception {
+		ArrayList<ConsuconsumoVos> consu = new ArrayList<ConsuconsumoVos>();
+		ArrayList<String> order = new ArrayList<String>();
+		Date in = con.getIncio();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(in);
+		int d = cal.get(Calendar.DAY_OF_MONTH);
+		int m = cal.get(Calendar.MONTH)+1;
+		int y = cal.get(Calendar.YEAR);
+		String fi = d+"-"+m+"-"+y;
+		Date fin = con.getFin();
+		Calendar cal1 = Calendar.getInstance();
+		cal1.setTime(fin);
+		int df = cal1.get(Calendar.DAY_OF_MONTH);
+		int mf = cal1.get(Calendar.MONTH)+1;
+		int yf = cal1.get(Calendar.YEAR);
+		String fif = df+"-"+mf+"-"+yf;
+		order.add("ORDER BY FECHA");
+		order.add("ORDER BY ID");
+		order.add("ORDER BY NOMBRE");
+		String sql = "SELECT PERSONA.USUARIO_ID AS ID , ROL,NOMBRE,FECHA ";
+		sql += "FROM(select ORDEN.ID_PERSONA AS ID,ORDEN.FECHA AS FECHA ";
+		sql += "from( ORDEN JOIN ITEMS_ORDEN ";
+		sql += "ON ID = ITEMS_ORDEN.ORDEN_ID)JOIN ITEMS ";
+		sql += "ON ITEMS_ORDEN.ITEMS_ID = ITEMS.ID ";
+				sql += "WHERE ITEMS.ID_RESTAURANTE !=" + id + " ";
+ 						sql += "AND FECHA BETWEEN '"+ fi+ "' AND '"+ fif +"') JOIN  PERSONA ";
+ 						sql += "ON PERSONA.USUARIO_ID = ID ";
+ 		if(id2==1)
+ 		{
+ 			sql += order.get(0);
+ 		}
+ 		else if(id2==2)
+ 		{
+ 			sql += order.get(1);
+ 		}
+ 		else if(id2==3)
+ 		{
+ 			sql += order.get(2);
+ 		}
+ 		else
+ 		{
+ 			throw new Exception("opcionde de ordenamiento no valido");
+ 		}
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		while (rs.next()) {
+
+			Long idu = rs.getLong("ID");
+			String rol = rs.getString("ROL");
+			String nombre = rs.getString("NOMBRE");
+			Date fecha = rs.getDate("FECHA");
+
+			consu.add(new ConsuconsumoVos(idu,rol,nombre,fecha,fecha));
+			
+		}
+		if(consu.size()==0)
+			throw new Exception("Nigun usuario consumio en este rango de fecha");
+		
+		
+		return consu;
+	}
+
+	public List<ConsuconsumoVos> darNoConfeUS(ConsuconsumoVos con , Long id,long id2,long id3) throws Exception {
+		ArrayList<ConsuconsumoVos> consu = new ArrayList<ConsuconsumoVos>();
+		ArrayList<String> order = new ArrayList<String>();
+		Date in = con.getIncio();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(in);
+		int d = cal.get(Calendar.DAY_OF_MONTH);
+		int m = cal.get(Calendar.MONTH)+1;
+		int y = cal.get(Calendar.YEAR);
+		String fi = d+"-"+m+"-"+y;
+		Date fin = con.getFin();
+		Calendar cal1 = Calendar.getInstance();
+		cal1.setTime(fin);
+		int df = cal1.get(Calendar.DAY_OF_MONTH);
+		int mf = cal1.get(Calendar.MONTH)+1;
+		int yf = cal1.get(Calendar.YEAR);
+		String fif = df+"-"+mf+"-"+yf;
+		order.add("ORDER BY FECHA");
+		order.add("ORDER BY ID");
+		order.add("ORDER BY NOMBRE");
+		String sql = "SELECT PERSONA.USUARIO_ID AS ID , ROL,NOMBRE,FECHA ";
+		sql += "FROM(select ORDEN.ID_PERSONA AS ID,ORDEN.FECHA AS FECHA ";
+		sql += "from( ORDEN JOIN ITEMS_ORDEN ";
+		sql += "ON ID = ITEMS_ORDEN.ORDEN_ID)JOIN ITEMS ";
+		sql += "ON ITEMS_ORDEN.ITEMS_ID = ITEMS.ID ";
+				sql += "WHERE ITEMS.ID_RESTAURANTE !=" + id + " ";
+ 						sql += "AND FECHA BETWEEN '"+ fi+ "' AND '"+ fif +"') JOIN  PERSONA ";
+ 						sql += "ON PERSONA.USUARIO_ID = ID ";
+ 						sql += "WHERE ID = " + id3 +" ";	
+ 		if(id2==1)
+ 		{
+ 			sql += order.get(0);
+ 		}
+ 		else if(id2==2)
+ 		{
+ 			sql += order.get(1);
+ 		}
+ 		else if(id2==3)
+ 		{
+ 			sql += order.get(2);
+ 		}
+ 		else
+ 		{
+ 			throw new Exception("opcionde de ordenamiento no valido");
+ 		}
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		while (rs.next()) {
+
+			Long idu = rs.getLong("ID");
+			String rol = rs.getString("ROL");
+			String nombre = rs.getString("NOMBRE");
+			Date fecha = rs.getDate("FECHA");
+
+			consu.add(new ConsuconsumoVos(idu,rol,nombre,fecha,fecha));
+			
+		}
+		if(consu.size()==0)
+			throw new Exception("Usted no a consumido en esta fecha en este restaurante");
+		
+		return consu;
+	}
 }

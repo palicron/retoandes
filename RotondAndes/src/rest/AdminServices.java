@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 
 import tm.RotondAndesTm;
 import vos.ConsuVos;
+import vos.ConsuconsumoVos;
 import vos.PersonaVos;
 import vos.Restaurante;
 import vos.Zona;
@@ -167,6 +168,36 @@ public class AdminServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity(personas).build();
+	}
+	
+	///servicio para consultar cosumo en rango de fecha de un restaruante como admin&/
+	@POST
+	@Path("consumo/{id:\\d+}/{id2:\\d+}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response consulconsu(ConsuconsumoVos con,@PathParam("id") Long id,@PathParam("id2") Long id2) {
+		RotondAndesTm tm = new RotondAndesTm(getPath());
+		List<ConsuconsumoVos> conf;
+		try {
+			conf =tm.Confech(id,con,id2);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(conf).build();
+	}
+	@POST
+	@Path("noconsumo/{id:\\d+}/{id2:\\d+}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response Noconsulconsu(ConsuconsumoVos con,@PathParam("id") Long id,@PathParam("id2") Long id2) {
+		RotondAndesTm tm = new RotondAndesTm(getPath());
+		List<ConsuconsumoVos> conf;
+		try {
+			conf =tm.NoConfech(id,con,id2);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(conf).build();
 	}
 
 }
