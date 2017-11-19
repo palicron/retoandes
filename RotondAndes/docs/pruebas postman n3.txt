@@ -1,0 +1,22 @@
+
+11- agregar ingredientes equivalentes
+http://localhost:8080/RotondAndes/rest/restaurantes/2/ingrediente/6
+
+{
+        "idIngrediente": "carne",
+        "idEquiv": "cerdo"
+    }
+
+12- agregar items equivalentes
+
+http://localhost:8080/RotondAndes/rest/restaurantes/1/items/21
+
+{
+        "idItem": 21,
+        "idEquiv": 25
+    }
+
+13-
+http://localhost:8080/RotondAndes/rest/restaurantes/1/surtir/items/22/5
+
+16/ http://localhost:8080/RotondAndes/rest/restaurantes/1/cancelarPedido/2

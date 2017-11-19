@@ -1,0 +1,152 @@
+
+1-para agregar un usuario (NO ES ADMIN)
+http://localhost:8080/RotondAndes/rest/profiles
+
+{
+        "id": 6664,
+     
+   "rol": !=Administrador AND !=CLIENTE,
+     
+   "clave": "9799393035",
+     
+   "telefono": 3265284500,
+     
+   "nombre": "Ivan Salazar"
+    }
+
+2-agregar un cliente por medio de un perfil administrador.
+
+http://localhost:8080/RotondAndes/rest/admins/{id}/newClient
+
+
+{
+        "id": 6664,
+     
+   "rol": null,
+     
+   "clave": "9799393035",
+     
+   "telefono": 3265284500,
+     
+   "nombre": "Ivan Salazar"
+    }
+
+3-registrar restaurante por medio de un administrador.
+
+http://localhost:8080/RotondAndes/rest/admins/{id}/newRestaurante
+
+{
+        "id":   ,
+     
+   "nombre":    ,
+     
+   "zona_id":    ,
+     
+   "descripcion":   ,
+     
+   "web": ""
+,
+    "especialidad": ""
+    }
+
+4- registrar un productor por emdio de un restaurante
+http://localhost:8080/RotondAndes/rest/restaurantes/{id}/additem
+rid es el id del restaurante el id del producto es asignado por el sistema
+{
+	"rid": 1 ,
+	
+"nombre":"hamburguesa",
+	
+"tipo" : "PLATO FUERTE",
+	
+"precio": 5000,
+	
+"nombreEN":"hamburger",
+	
+"tiempopreparacion":15,
+	
+"costoproducion":4000,
+	
+"cantidad":30
+	
+}
+
+5-resgitra un ingrediente a un producto por unr estaurante
+
+ @POST http://localhost:8080/RotondAndes/rest/restaurantes/{id}/addingredientes
+{
+"nombre": "lechuga" ,
+	
+"descripcion":"addicion",
+	
+"descripcionen" : "addition"
+}
+5.1registrar un ingrediente a un item 
+@POST http://localhost:8080/RotondAndes/rest/restaurantes/{id}/item/{id2}/ingrediente
+{
+"nombre": "lechuga" 
+}
+6-registrar un memu desde un restaurante
+ @POST http://localhost:8080/RotondAndes/rest/restaurantes/{id}/newMenu
+el id se asigna automaticamente el precio es 0 hasta que se agregen items
+6.1
+@POST http://localhost:8080/RotondAndes/rest/restaurantes/{id}/menu/{id2}/item/{id3}
+id del restaurante , id2 id del menu , id3 id del items a agregar el rpecio del menu se actuliza 
+automaticamente
+
+7-registrar zona por medio de perfil de administrador
+
+http://localhost:8080/RotondAndes/rest/restaurantes/{id}/item/{id2}/ingrediente
+
+
+{
+        "id":  LONG ,
+     
+   "ambiente": STRING   ,
+     
+   "capacidad":  LONG  ,
+     
+   "descripcion_tecnica":  String ,
+     
+   "especial": CHAR Y/N,
+      }
+
+8-Registrar,eliminar,actualizar preferencia deperfil.
+
+registrar: http://localhost:8080/RotondAndes/rest/profiles/{id: \\d+}/preferences/
+ACTUALIZAR:http://localhost:8080/RotondAndes/rest/profiles/{id: \\d+}/preferences/{tipo} if exist
+ELIMINAR:http://localhost:8080/RotondAndes/rest/profiles/{id: \\d+}/preferences/{tipo} if exist
+
+{
+        "id_persona":  LONG ,
+     
+   "tipo": STRING   ,
+     
+   
+      }
+9-agregar una orden a un producto
+registrar:@post http://localhost:8080/RotondAndes/rest/profiles/{id}/addorden
+id del usuario la fecha y el id de la orden se crean automaticamente
+-agregar item a una order
+agregar un item :http://localhost:8080/RotondAndes/rest/profiles/{id}/orden/{id2}/item/{id3}
+id del usuario, id2 id de la orden, id3 el id del item a agregar, el total de la orden se actuliza automaticamente
+agregar un menu : http://localhost:8080/RotondAndes/rest/profiles/666/orden/{id}/menu/{id2}
+
+10- actulizar el inventario de la rotonda
+http://localhost:8080/RotondAndes/rest/restaurantes/{id}/orden/{id2}
+el restaurante liquida la orde significando que el plato ya salio para el cliente
+
+
+//////////////PARTE 2//////////////////////////
+
+1-para ver los items filtrados
+
+http://localhost:8080/RotondAndes/rest/items/{filter} precio/tipo
+
+
+3-
+ datos cliente
+ http://localhost:8080/RotondAndes/rest/clientesData/{id}
+http://localhost:8080/RotondAndes/rest/clientesData/{id}/preferences
+http://localhost:8080/RotondAndes/rest/clientesData/{id}preferences/{id}
+
