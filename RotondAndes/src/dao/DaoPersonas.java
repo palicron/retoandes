@@ -438,4 +438,28 @@ public class DaoPersonas {
 		
 		return consu;
 	}
+////
+	public List<PersonaVos> buenosClientes() throws SQLException {
+		
+		ArrayList<PersonaVos> personas = new ArrayList<PersonaVos>();
+
+		String sql = "SELECT PERSONA.USUARIO_ID,PERSONA.ROL,PERSONA.CLAVE,PERSONA.Telefono,PERSONA.NOMBRE FROM PERSONA JOIN ORDEN   ON PERSONA.USUARIO_ID = ORDEN.ID_PERSONA JOIN ITEMS_ORDEN ON ORDEN.ID=ITEMS_ORDEN.ORDEN_ID JOIN ITEMS ON ITEMS_ORDEN.ITEMS_ID=ITEMS.ID "
+				+ "WHERE ITEMS.PRECIO>=37";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		while (rs.next()) {
+
+			Long id = rs.getLong("USUARIO_ID");
+			String rol = rs.getString("ROL");
+			String clave = rs.getString("CLAVE");
+			Long telefono = rs.getLong("Telefono");
+			String nombre = rs.getString("NOMBRE");
+
+			personas.add(new PersonaVos(id, rol, clave, telefono, nombre));
+		}
+		return personas;
+	}
 }

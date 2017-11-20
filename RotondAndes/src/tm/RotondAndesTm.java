@@ -21,6 +21,7 @@ import dao.DaoRestaurante;
 import dao.DaoZona;
 import vos.ConsuVos;
 import vos.ConsuconsumoVos;
+import vos.FuncionamientoVos;
 import vos.Ingredientes;
 import vos.Items;
 import vos.MenuVos;
@@ -1679,5 +1680,42 @@ public class RotondAndesTm {
 			}
 		}
 		return list;
+	}
+	
+	public FuncionamientoVos funcionamiento() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<PersonaVos> buenosClientes(Long id) throws SQLException,Exception {
+		List<PersonaVos> personas;
+		DaoPersonas daoPersona = new DaoPersonas();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoPersona.setConn(conn);
+			
+			personas = daoPersona.buenosClientes();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoPersona.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return personas;
 	}
 }
