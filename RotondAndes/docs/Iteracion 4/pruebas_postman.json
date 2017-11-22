@@ -1,0 +1,236 @@
+{
+	"id": "56d14c99-46a5-bd68-fc25-2853c374b91b",
+	"name": "sis",
+	"description": null,
+	"order": [
+		"4dbc8f4d-efa8-3153-5e23-7bb115ef72bf",
+		"3d9509b2-b020-0008-75de-a81834eb2167",
+		"6ab5251f-63fd-6722-c307-bd943a3682de",
+		"8f5e3071-b510-8285-628d-853169f7773e",
+		"f7744144-6242-74ac-5927-9c54d6dadfb6",
+		"73e82b9f-ca6d-7e57-c2b7-c9dbe5dc02a1",
+		"cc5f0c58-c749-c7cb-6375-a29c5c39dfe7"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 0,
+	"owner": "2582047",
+	"public": false,
+	"requests": [
+		{
+			"id": "3d9509b2-b020-0008-75de-a81834eb2167",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/RotondAndes/rest/profiles/20000/noconsumo/1670/1",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "56d14c99-46a5-bd68-fc25-2853c374b91b",
+			"data": [],
+			"dataMode": "raw",
+			"name": "http://localhost:8080/RotondAndes/rest/profiles/20000/noconsumo/1670/1",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1511195163926,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "\n    {\n        \"ID\": 4,\n        \"ROL\": \"Administrador\",\n        \"NOMBRE\": \"Orion Burdge\",\n        \"FI\": \"2017-10-04T18:25:43.511Z\",\n        \"FF\": \"2017-10-11T18:25:43.511Z\"\n        \n    }"
+		},
+		{
+			"id": "4dbc8f4d-efa8-3153-5e23-7bb115ef72bf",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/RotondAndes/rest/gerentes/2/buenosClientes",
+			"folder": null,
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1511312345189,
+			"name": "http://localhost:8080/RotondAndes/rest/profiles/1/reservas",
+			"description": "como se manda unar reserva",
+			"collectionId": "56d14c99-46a5-bd68-fc25-2853c374b91b",
+			"rawModeData": "{\r\n        \"zid\": 666,\r\n        \"fecha\": \"2012-10-12T12:25:43\",\r\n        \"invitados\": 1000,\r\n        \"mid\": 1,\r\n        \"uid\": 1\r\n}"
+		},
+		{
+			"id": "6ab5251f-63fd-6722-c307-bd943a3682de",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/RotondAndes/rest/gerentes/2/buenosClientes",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "56d14c99-46a5-bd68-fc25-2853c374b91b",
+			"data": [],
+			"dataMode": "raw",
+			"name": "http://localhost:8080/RotondAndes/rest/gerentes/2/buenosClientes",
+			"description": "buenos clientes",
+			"descriptionFormat": "html",
+			"time": 1511312375818,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\r\n        \"zid\": 666,\r\n        \"fecha\": \"2012-10-12T12:25:43\",\r\n        \"invitados\": 1000,\r\n        \"mid\": 1,\r\n        \"uid\": 1\r\n}"
+		},
+		{
+			"id": "73e82b9f-ca6d-7e57-c2b7-c9dbe5dc02a1",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/RotondAndes/rest/profiles/1154382/consumo/1670/1",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "56d14c99-46a5-bd68-fc25-2853c374b91b",
+			"data": [],
+			"dataMode": "raw",
+			"name": "http://localhost:8080/RotondAndes/rest/profiles/1154382/consumo/1670/1",
+			"description": "consumo del cliente ",
+			"descriptionFormat": "html",
+			"time": 1511312877418,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "\n    {\n        \"ID\": 4,\n        \"ROL\": \"Administrador\",\n        \"NOMBRE\": \"Orion Burdge\",\n        \"FI\": \"2012-10-04T18:25:43.511Z\",\n        \"FF\": \"2017-10-11T18:25:43.511Z\"\n        \n    }"
+		},
+		{
+			"id": "8f5e3071-b510-8285-628d-853169f7773e",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/RotondAndes/rest/admins/consumo/916/1",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "56d14c99-46a5-bd68-fc25-2853c374b91b",
+			"data": [],
+			"dataMode": "raw",
+			"name": "http://localhost:8080/RotondAndes/rest/admins/consumo/916/1",
+			"description": "consumo",
+			"descriptionFormat": "html",
+			"time": 1511312653362,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "\n    {\n        \"ID\": 4,\n        \"ROL\": \"Administrador\",\n        \"NOMBRE\": \"Orion Burdge\",\n        \"FI\": \"2012-10-04T18:25:43.511Z\",\n        \"FF\": \"2017-10-11T18:25:43.511Z\"\n        \n    }"
+		},
+		{
+			"id": "cc5f0c58-c749-c7cb-6375-a29c5c39dfe7",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/RotondAndes/rest/profiles/1154382/noconsumo/1670/1",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "56d14c99-46a5-bd68-fc25-2853c374b91b",
+			"data": [],
+			"dataMode": "raw",
+			"name": "http://localhost:8080/RotondAndes/rest/profiles/1154382/noconsumo/1670/1",
+			"description": "no consumo cliente",
+			"descriptionFormat": "html",
+			"time": 1511313252547,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "\n    {\n        \"ID\": 4,\n        \"ROL\": \"Administrador\",\n        \"NOMBRE\": \"Orion Burdge\",\n        \"FI\": \"2012-10-04T18:25:43.511Z\",\n        \"FF\": \"2017-10-11T18:25:43.511Z\"\n        \n    }"
+		},
+		{
+			"id": "f7744144-6242-74ac-5927-9c54d6dadfb6",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/RotondAndes/rest/admins/noconsumo/916/1",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "56d14c99-46a5-bd68-fc25-2853c374b91b",
+			"data": [],
+			"dataMode": "raw",
+			"name": "http://localhost:8080/RotondAndes/rest/admins/noconsumo/916/1",
+			"description": "cosumos que nos on del restaurante 916",
+			"descriptionFormat": "html",
+			"time": 1511312760698,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "\n    {\n        \"ID\": 4,\n        \"ROL\": \"Administrador\",\n        \"NOMBRE\": \"Orion Burdge\",\n        \"FI\": \"2012-10-04T18:25:43.511Z\",\n        \"FF\": \"2017-10-11T18:25:43.511Z\"\n        \n    }"
+		}
+	]
+}

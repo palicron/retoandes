@@ -204,11 +204,12 @@ public class DaoPersonas {
 		int mf = cal1.get(Calendar.MONTH)+1;
 		int yf = cal1.get(Calendar.YEAR);
 		String fif = df+"-"+mf+"-"+yf;
-		order.add("ORDER BY FECHA");
-		order.add("ORDER BY ID");
-		order.add("ORDER BY NOMBRE");
-		String sql = "SELECT PERSONA.USUARIO_ID AS ID , ROL,NOMBRE,FECHA ";
-		sql += "FROM(select ORDEN.ID_PERSONA AS ID,ORDEN.FECHA AS FECHA ";
+		order.add("ORDER BY FECHA ");
+		order.add("ORDER BY ID ");
+		order.add("ORDER BY NOMBRE ");
+		order.add("ORDER BY NOMBRE_PRODUC ");
+		String sql = "SELECT PERSONA.USUARIO_ID AS ID , ROL,NOMBRE,NOMBRE_PRODUC,FECHA  ";
+		sql += "FROM(select ORDEN.ID_PERSONA AS ID,ORDEN.FECHA AS FECHA, ITEMS.NOMBRE AS NOMBRE_PRODUC  ";
 		sql += "from( ORDEN JOIN ITEMS_ORDEN ";
 		sql += "ON ID = ITEMS_ORDEN.ORDEN_ID)JOIN ITEMS ";
 		sql += "ON ITEMS_ORDEN.ITEMS_ID = ITEMS.ID ";
@@ -226,6 +227,10 @@ public class DaoPersonas {
  		else if(id2==3)
  		{
  			sql += order.get(2);
+ 		}
+ 		else if (id2==4)
+ 		{
+ 			
  		}
  		else
  		{
@@ -267,8 +272,8 @@ public class DaoPersonas {
 		order.add("ORDER BY FECHA");
 		order.add("ORDER BY ID");
 		order.add("ORDER BY NOMBRE");
-		String sql = "SELECT PERSONA.USUARIO_ID AS ID , ROL,NOMBRE,FECHA ";
-		sql += "FROM(select ORDEN.ID_PERSONA AS ID,ORDEN.FECHA AS FECHA ";
+		String sql = "SELECT PERSONA.USUARIO_ID AS ID , ROL,NOMBRE,NOMBRE_PRODUC,FECHA  ";
+		sql += "FROM(select ORDEN.ID_PERSONA AS ID,ORDEN.FECHA AS FECHA, ITEMS.NOMBRE AS NOMBRE_PRODUC  ";
 		sql += "from( ORDEN JOIN ITEMS_ORDEN ";
 		sql += "ON ID = ITEMS_ORDEN.ORDEN_ID)JOIN ITEMS ";
 		sql += "ON ITEMS_ORDEN.ITEMS_ID = ITEMS.ID ";
@@ -329,11 +334,11 @@ public class DaoPersonas {
 		order.add("ORDER BY FECHA");
 		order.add("ORDER BY ID");
 		order.add("ORDER BY NOMBRE");
-		String sql = "SELECT PERSONA.USUARIO_ID AS ID , ROL,NOMBRE,FECHA ";
-		sql += "FROM(select ORDEN.ID_PERSONA AS ID,ORDEN.FECHA AS FECHA ";
+		String sql = "SELECT PERSONA.USUARIO_ID AS ID , ROL,NOMBRE,FECHA  ";
+		sql += "FROM(select ORDEN.ID_PERSONA AS ID,ORDEN.FECHA AS FECHA  ";
 		sql += "from( ORDEN JOIN ITEMS_ORDEN ";
-		sql += "ON ID = ITEMS_ORDEN.ORDEN_ID)JOIN ITEMS ";
-		sql += "ON ITEMS_ORDEN.ITEMS_ID = ITEMS.ID ";
+		sql += "ON ID = ITEMS_ORDEN.ORDEN_ID)JOIN ITEMS  ";
+		sql += "ON ITEMS_ORDEN.ITEMS_ID = ITEMS.ID  ";
 				sql += "WHERE ITEMS.ID_RESTAURANTE !=" + id + " ";
  						sql += "AND FECHA BETWEEN '"+ fi+ "' AND '"+ fif +"') JOIN  PERSONA ";
  						sql += "ON PERSONA.USUARIO_ID = ID ";
@@ -394,8 +399,8 @@ public class DaoPersonas {
 		order.add("ORDER BY FECHA");
 		order.add("ORDER BY ID");
 		order.add("ORDER BY NOMBRE");
-		String sql = "SELECT PERSONA.USUARIO_ID AS ID , ROL,NOMBRE,FECHA ";
-		sql += "FROM(select ORDEN.ID_PERSONA AS ID,ORDEN.FECHA AS FECHA ";
+		String sql = "SELECT PERSONA.USUARIO_ID AS ID , ROL,NOMBRE,NOMBRE_PRODUC,FECHA ";
+		sql += "FROM(select ORDEN.ID_PERSONA AS ID,ORDEN.FECHA AS FECHA,ITEMS.NOMBRE AS NOMBRE_PRODUC " ;
 		sql += "from( ORDEN JOIN ITEMS_ORDEN ";
 		sql += "ON ID = ITEMS_ORDEN.ORDEN_ID)JOIN ITEMS ";
 		sql += "ON ITEMS_ORDEN.ITEMS_ID = ITEMS.ID ";
