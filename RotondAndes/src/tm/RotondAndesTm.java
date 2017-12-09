@@ -1700,10 +1700,12 @@ public class RotondAndesTm {
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
+			conn.rollback();
 			throw e;
 		} catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
+			conn.rollback();
 			throw e;
 		} finally {
 			try {
@@ -1717,5 +1719,39 @@ public class RotondAndesTm {
 			}
 		}
 		return personas;
+	}
+	
+	public void eliminarRestaurante(Long id) throws SQLException,Exception {
+		
+		DaoRestaurante dao = new DaoRestaurante();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			dao.setConn(conn);
+			
+			dao.eliminarRestaurante(id);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			conn.rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				dao.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		
 	}
 }
