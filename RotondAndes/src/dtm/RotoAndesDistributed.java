@@ -1,28 +1,12 @@
 package dtm;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-
 import javax.jms.JMSException;
-import javax.jms.Queue;
-import javax.jms.QueueConnection;
 import javax.jms.QueueConnectionFactory;
-import javax.jms.QueueReceiver;
-import javax.jms.QueueSession;
-import javax.jms.Session;
 import javax.jms.TopicConnectionFactory;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.servlet.ServletContext;
-import javax.ws.rs.core.Context;
-
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
-
 import com.rabbitmq.jms.admin.RMQConnectionFactory;
-import com.rabbitmq.jms.admin.RMQDestination;
-
-
+import jms.AllRotondasMDB;
 import tm.RotondAndesTm;
 
 
@@ -41,7 +25,7 @@ public class RotoAndesDistributed
 	
 	private TopicConnectionFactory factory;
 	
-	
+	private AllRotondasMDB allRotoandesMD;
 	private static String path;
 
 
@@ -49,7 +33,8 @@ public class RotoAndesDistributed
 	{
 		InitialContext ctx = new InitialContext();
 		factory = (RMQConnectionFactory) ctx.lookup(MQ_CONNECTION_NAME);
-	
+		allRotoandesMD = new AllRotondasMDB(factory, ctx);
+		allRotoandesMD.start();
 		
 	}
 	

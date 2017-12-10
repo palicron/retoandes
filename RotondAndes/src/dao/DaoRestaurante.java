@@ -122,7 +122,8 @@ public class DaoRestaurante {
 		return list;
 
 	}
-	
+
+	//ELIMINA UN RESTAURANTE 
 	public void eliminarRestaurante(Long id) throws SQLException, Exception {
 		
 		String sql = "alter session set isolation_level=serializable ";
@@ -133,7 +134,6 @@ public class DaoRestaurante {
 		sql = "DELETE FROM REST RESTAURANTE WHERE ID = " + id;
 		prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
-		ResultSet rs = prepStmt.executeQuery();
 
 
 	}

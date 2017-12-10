@@ -1,4 +1,7 @@
-/dtm/
 /dao/
-/tm/
+/dtm/
+/jms/
 /rest/
+/startup/
+/tm/
+/vos/
