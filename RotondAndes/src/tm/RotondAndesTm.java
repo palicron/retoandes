@@ -19,15 +19,19 @@ import dao.DaoPersonas;
 import dao.DaoPreferencia;
 import dao.DaoRestaurante;
 import dao.DaoZona;
+import dtm.RotoAndesDistributed;
+
 import vos.ConsuVos;
 import vos.ConsuconsumoVos;
 import vos.FuncionamientoVos;
 import vos.Ingredientes;
 import vos.Items;
+import vos.ListaProductos;
 import vos.MenuVos;
 import vos.OrdenVos;
 import vos.PersonaVos;
 import vos.Preferencia;
+import vos.Productoxxx;
 import vos.ReservaVos;
 import vos.Restaurante;
 import vos.Zona;
@@ -74,6 +78,8 @@ public class RotondAndesTm {
 	 * conexion a la base de datos
 	 */
 	private Connection conn;
+	
+	private RotoAndesDistributed dtm;
 
 	/**
 	 * Metodo constructor de la clase VideoAndesMaster, esta clase modela y contiene
@@ -87,6 +93,7 @@ public class RotondAndesTm {
 	 */
 	public RotondAndesTm(String contextPathP) {
 		connectionDataPath = contextPathP + CONNECTION_DATA_FILE_NAME_REMOTE;
+		dtm = RotoAndesDistributed.getInstance(this);
 		initConnectionData();
 	}
 
@@ -437,13 +444,14 @@ public class RotondAndesTm {
 	 * @return lista de items
 	 * @throws Exception
 	 */
-	public List<Items> darItems() throws Exception {
-		List<Items> items = null;
+	public ListaProductos darItems() throws Exception {
+		
+		ListaProductos ll ;
 		DAOitems it = new DAOitems();
 		try {
 			this.conn = darConexion();
 			it.setConn(conn);
-			items = it.darItems();
+			ll = it.darItems();
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
@@ -464,7 +472,7 @@ public class RotondAndesTm {
 			}
 		}
 
-		return items;
+		return ll;
 	}
 
 	/**
@@ -1721,7 +1729,7 @@ public class RotondAndesTm {
 		return personas;
 	}
 	
-	public void eliminarRestaurante(Long id) throws SQLException,Exception {
+	public void eliminarRestaurante(String id) throws SQLException,Exception {
 		
 		DaoRestaurante dao = new DaoRestaurante();
 		try {
@@ -1751,6 +1759,45 @@ public class RotondAndesTm {
 				exception.printStackTrace();
 				throw exception;
 			}
+		}
+		
+	}
+	/////fistribuas////
+	public ListaProductos darItemsR() throws Exception {
+		ListaProductos lii = null;
+		List<Productoxxx> remL = darItems().getProductos();
+		try
+		{
+			 lii = dtm.getallitmes();
+			 if(lii!=null)
+			 {
+				 remL.addAll(lii.getProductos()); 
+				 lii.setProductos(remL);
+			 }
+			 else
+			 {
+				 lii = new ListaProductos(remL);
+			 }
+		   
+			
+		}
+		catch(Exception e)
+		{
+			
+		}
+		return lii;
+	}
+	
+	public void elimnarRes(String nom) throws Exception {
+		
+		try
+		{
+			 dtm.deleteres(nom);
+			
+		}
+		catch(Exception e)
+		{
+			
 		}
 		
 	}

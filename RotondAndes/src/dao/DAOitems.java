@@ -9,6 +9,8 @@ import java.util.List;
 
 import vos.Ingredientes;
 import vos.Items;
+import vos.ListaProductos;
+import vos.Productoxxx;
 
 public class DAOitems {
 
@@ -35,30 +37,51 @@ public class DAOitems {
 		this.conn = con;
 	}
 
-	public ArrayList<Items> darItems() throws SQLException, Exception {
-		ArrayList<Items> items = new ArrayList<Items>();
-
+	public ListaProductos darItems() throws SQLException, Exception {
+		ArrayList<Productoxxx> items = new ArrayList<Productoxxx>();
+        
 		String sql = "SELECT * FROM ITEMS";
-
+        List<Productoxxx> ll = new ArrayList<Productoxxx>();
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
 		while (rs.next()) {
-			Long id = rs.getLong("ID");
-			Long Rid = rs.getLong("ID_RESTAURANTE");
 			String name = rs.getString("NOMBRE");
-			String tipo = rs.getString("TIPO");
-			Long precio = rs.getLong("PRECIO");
-			String nombreen = rs.getString("NOMBREINGLES");
-			Long tiempop = rs.getLong("TIEMPO_PREPARACION");
-			Long costop = rs.getLong("COSTO_PRODU");
-			int cant = rs.getInt("CANTIDAD");
-			items.add(new Items(id, Rid, name, tipo, precio, nombreen, tiempop, costop, cant));
+			Double tiempop = rs.getDouble("TIEMPO_PREPARACION");
+
+			Productoxxx por = new Productoxxx(name, tiempop);
+			ll.add(por);
+			
 		}
-		return items;
+		 ListaProductos sad = new ListaProductos(ll);
+		 return sad;
 
 	}
+//	public ArrayList<Items> darItems() throws SQLException, Exception {
+//		ArrayList<Items> items = new ArrayList<Items>();
+//
+//		String sql = "SELECT * FROM ITEMS";
+//
+//		PreparedStatement prepStmt = conn.prepareStatement(sql);
+//		recursos.add(prepStmt);
+//		ResultSet rs = prepStmt.executeQuery();
+//
+//		while (rs.next()) {
+//			Long id = rs.getLong("ID");
+//			Long Rid = rs.getLong("ID_RESTAURANTE");
+//			String name = rs.getString("NOMBRE");
+//			String tipo = rs.getString("TIPO");
+//			Long precio = rs.getLong("PRECIO");
+//			String nombreen = rs.getString("NOMBREINGLES");
+//			Long tiempop = rs.getLong("TIEMPO_PREPARACION");
+//			Long costop = rs.getLong("COSTO_PRODU");
+//			int cant = rs.getInt("CANTIDAD");
+//			items.add(new Items(id, Rid, name, tipo, precio, nombreen, tiempop, costop, cant));
+//		}
+//		return items;
+//
+//	}
 
 	public Items darItem(Long id) throws SQLException, Exception {
 

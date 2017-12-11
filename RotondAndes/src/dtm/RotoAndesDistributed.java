@@ -1,14 +1,20 @@
 package dtm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.jms.JMSException;
 import javax.jms.QueueConnectionFactory;
 import javax.jms.TopicConnectionFactory;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import com.rabbitmq.jms.admin.RMQConnectionFactory;
+
+import jms.AllRestauranDelete;
 import jms.AllRotondasMDB;
 import tm.RotondAndesTm;
-
+import vos.Items;
+import vos.ListaProductos;
 
 
 
@@ -26,8 +32,9 @@ public class RotoAndesDistributed
 	private TopicConnectionFactory factory;
 	
 	private AllRotondasMDB allRotoandesMD;
+	private AllRestauranDelete delete;
 	private static String path;
-
+	
 
 	private RotoAndesDistributed() throws NamingException, JMSException
 	{
@@ -35,6 +42,7 @@ public class RotoAndesDistributed
 		factory = (RMQConnectionFactory) ctx.lookup(MQ_CONNECTION_NAME);
 		allRotoandesMD = new AllRotondasMDB(factory, ctx);
 		allRotoandesMD.start();
+		delete = new AllRestauranDelete(factory, ctx);
 		
 	}
 	
@@ -90,7 +98,52 @@ public class RotoAndesDistributed
 		return getInstance(tm);
 	}
 	
-
+    public ListaProductos getLocalitmes()
+    {
+    	ListaProductos rs = null ;
+    	try {
+			rs =  tm.darItems();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return rs;
+    }
+    public ListaProductos getallitmes()
+    {
+    	ListaProductos rs = null;
+    	try {
+			rs = allRotoandesMD.getRemoteItems();
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return rs;
+    }
+    
+    public void deleteres(String id)
+    {
+    	int rs = 0;
+    	try {
+			 delete.DeleteRemoteRes(id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    
+    }
+    public void deletereslocal(String id)
+    {
+    
+    	try {
+			 tm.eliminarRestaurante(id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    
+    }
 	
 
 }

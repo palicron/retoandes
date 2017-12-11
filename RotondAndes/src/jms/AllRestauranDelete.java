@@ -32,21 +32,20 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.rabbitmq.jms.admin.RMQDestination;
 
 import dtm.RotoAndesDistributed;
-import vos.Items;
-import vos.ListaItems;
-import vos.ListaProductos;
-import vos.Productoxxx;
 import vos.ExchangeMsg;
 
 
-public class AllRotondasMDB implements MessageListener, ExceptionListener{
 
-	public final static int TIME_OUT = 8;
+
+
+public class AllRestauranDelete implements MessageListener, ExceptionListener 
+{
+	public final static int TIME_OUT = 5;
 	private final static String APP = "app3";
 	
-	private final static String GLOBAL_TOPIC_NAME = "java:global/RMQTopicAllProductos";
-	private final static String LOCAL_TOPIC_NAME = "java:global/RMQAllProductosLocal";
-	
+    private final static String GLOBAL_TOPIC_NAME = "java:global/RMQTopicRestaurante";
+	private final static String LOCAL_TOPIC_NAME = "java:global/RMQRestauranteLocal";
+
 	private final static String REQUEST = "REQUEST";
 	private final static String REQUEST_ANSWER = "REQUEST_ANSWER";
 	
@@ -54,18 +53,18 @@ public class AllRotondasMDB implements MessageListener, ExceptionListener{
 	private TopicSession topicSession;
 	private Topic globalTopic;
 	private Topic localTopic;
+	private String idg;
+	private List answer = new ArrayList();
 	
-	private List<Productoxxx> answer = new ArrayList<Productoxxx>();
-	
-	public AllRotondasMDB(TopicConnectionFactory factory, InitialContext ctx) throws JMSException, NamingException 
+	public AllRestauranDelete(TopicConnectionFactory factory, InitialContext ctx) throws JMSException, NamingException 
 	{	
 		topicConnection = factory.createTopicConnection();
 		topicSession = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
 		globalTopic = (RMQDestination) ctx.lookup(GLOBAL_TOPIC_NAME);
-	    TopicSubscriber topicSubscriber =  topicSession.createSubscriber(globalTopic);
-	    topicSubscriber.setMessageListener(this);
+		TopicSubscriber topicSubscriber =  topicSession.createSubscriber(globalTopic);
+		topicSubscriber.setMessageListener(this);
 		localTopic = (RMQDestination) ctx.lookup(LOCAL_TOPIC_NAME);
-	    topicSubscriber =  topicSession.createSubscriber(localTopic);
+		topicSubscriber =  topicSession.createSubscriber(localTopic);
 		topicSubscriber.setMessageListener(this);
 		topicConnection.setExceptionListener(this);
 	}
@@ -81,9 +80,9 @@ public class AllRotondasMDB implements MessageListener, ExceptionListener{
 		topicConnection.close();
 	}
 	
-	
-		public ListaProductos getRemoteItems() throws Exception
-		{
+	public void DeleteRemoteRes(String ids) throws Exception
+	{
+		idg=ids;
 		answer.clear();
 		String id = APP+""+System.currentTimeMillis();
 		MessageDigest md = MessageDigest.getInstance("MD5");
@@ -98,7 +97,6 @@ public class AllRotondasMDB implements MessageListener, ExceptionListener{
 		while(TIME_OUT != count){
 			TimeUnit.SECONDS.sleep(1);
 			count++;
-			System.out.println(answer);
 		}
 		if(count == TIME_OUT){
 			if(this.answer.isEmpty()){
@@ -110,8 +108,7 @@ public class AllRotondasMDB implements MessageListener, ExceptionListener{
 		
 		if(answer.isEmpty())
 			throw new Exception("Non Response");
-		ListaProductos res = new ListaProductos(answer);
-        return res;
+	
 	}
 	
 	
@@ -119,7 +116,7 @@ public class AllRotondasMDB implements MessageListener, ExceptionListener{
 	{
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.println(id);
-		ExchangeMsg msg = new ExchangeMsg("productos.general", APP, payload, status, id);
+		ExchangeMsg msg = new ExchangeMsg("restaurante.general", APP, payload, status, id);
 		TopicPublisher topicPublisher = topicSession.createPublisher(dest);
 		topicPublisher.setDeliveryMode(DeliveryMode.PERSISTENT);
 		TextMessage txtMsg = topicSession.createTextMessage();
@@ -129,8 +126,6 @@ public class AllRotondasMDB implements MessageListener, ExceptionListener{
 		txtMsg.setText(envelope);
 		topicPublisher.publish(txtMsg);
 	}
-	
-
 	
 	@Override
 	public void onMessage(Message message) 
@@ -149,19 +144,19 @@ public class AllRotondasMDB implements MessageListener, ExceptionListener{
 			{
 				if(ex.getStatus().equals(REQUEST))
 				{
-						RotoAndesDistributed dtm = RotoAndesDistributed.getInstance();
-						System.out.println("mierda1");
-					ListaProductos productos = dtm.getLocalitmes();
-					System.out.println("mierda");
-					String payload = mapper.writeValueAsString(productos);
-					Topic t = new RMQDestination("", "productos.test", ex.getRoutingKey(), "", false);
+				    RotoAndesDistributed dtm = RotoAndesDistributed.getInstance();
+				     dtm.deletereslocal(idg);
+					String payload = mapper.writeValueAsString(idg);
+					Topic t = new RMQDestination("", "restaurante.test", ex.getRoutingKey(), "", false);
 					sendMessage(payload, REQUEST_ANSWER, t, id);
+					
 				}
 				else if(ex.getStatus().equals(REQUEST_ANSWER))
 				{
-					System.out.println("mierda");
-					ListaProductos v = mapper.readValue(ex.getPayload(), ListaProductos.class);
-					answer.addAll(v.getProductos());
+					String v = mapper.readValue(ex.getPayload(), String.class);
+				    RotoAndesDistributed dtm = RotoAndesDistributed.getInstance();
+					dtm.deletereslocal(v);
+					//System.out.println("carajo");
 				}
 			}
 			
@@ -183,11 +178,11 @@ public class AllRotondasMDB implements MessageListener, ExceptionListener{
 		}
 		
 	}
+
 	@Override
 	public void onException(JMSException exception) 
 	{
 		System.out.println(exception);
 	}
-
 
 }

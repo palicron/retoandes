@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 import tm.RotondAndesTm;
 import vos.Ingredientes;
 import vos.Items;
+import vos.ListaProductos;
 
 @Path("items")
 public class ItemsServices {
@@ -43,9 +44,9 @@ public class ItemsServices {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getitems() {
 		RotondAndesTm tm = new RotondAndesTm(getPath());
-		List<Items> items;
+		ListaProductos items;
 		try {
-			items = tm.darItems();
+			items = tm.darItemsR();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}

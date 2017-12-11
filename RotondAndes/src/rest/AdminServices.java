@@ -200,18 +200,18 @@ public class AdminServices {
 		return Response.status(200).entity(conf).build();
 	}
 	
-	@GET
-	@Path("eliminar/{id:\\d+}")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response eliminar(@PathParam("id") Long id) {
-		RotondAndesTm tm = new RotondAndesTm(getPath());
-		try {
-		tm.eliminarRestaurante(id);;
-			
-		} catch (Exception e) {
-			return Response.status(500).entity(doErrorMessage(e)).build();
-		}
-		return Response.status(200).entity("el restaurante fue borrado correctamente").build();
-	}
+//	@GET
+//	@Path("eliminar/{id:\\d+}")
+//	@Produces({ MediaType.APPLICATION_JSON })
+//	public Response eliminar(@PathParam("id") Long id) {
+//		RotondAndesTm tm = new RotondAndesTm(getPath());
+//		try {
+//		tm.eliminarRestaurante(id);;
+//			
+//		} catch (Exception e) {
+//			return Response.status(500).entity(doErrorMessage(e)).build();
+//		}
+//		return Response.status(200).entity("el restaurante fue borrado correctamente").build();
+//	}
 
 }

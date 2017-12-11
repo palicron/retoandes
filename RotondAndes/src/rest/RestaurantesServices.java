@@ -21,6 +21,7 @@ import vos.EquivalenciaItems;
 import vos.Ingredientes;
 import vos.Items;
 import vos.MenuVos;
+import vos.Productoxxx;
 
 @Path("restaurantes")
 public class RestaurantesServices {
@@ -221,6 +222,20 @@ public class RestaurantesServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity(id2).build();
+	}
+	
+	@POST
+	@Path("del")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response borrarres(Productoxxx prod) {
+		RotondAndesTm tm = new RotondAndesTm(getPath());
+		try {
+			 tm.elimnarRes(prod.getNombreProducto());
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity("eliminado").build();
 	}
 
 }
